@@ -1,5 +1,6 @@
 using System;
 using System.Text.RegularExpressions;
+using System.IO;
 
 namespace postcodesDistance
 {
@@ -29,7 +30,14 @@ namespace postcodesDistance
 
 				mapsApiHelper apiHelper = new mapsApiHelper();
 				var model = apiHelper.CallApi(firstPostcode, secondPostcode);
-				Console.WriteLine(model.Rows[0].Elements[0].Distance.Text);
+				string distance = model.Rows[0].Elements[0].Distance.Text;
+				Console.WriteLine(distance);
+
+				// writing result to historyLog.txt 
+
+				File.AppendAllText
+				("historyLog.txt",
+				$"{DateTime.Now.ToString("dd MMM yyyy HH:mm:ss")}{System.Environment.NewLine}Distance from {firstPostcode.ToUpper()} to {secondPostcode.ToUpper()}{System.Environment.NewLine}{distance}{System.Environment.NewLine}{System.Environment.NewLine}");
 			} 
 			else 
 			{
